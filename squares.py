@@ -60,14 +60,22 @@ if __name__ == "__main__":
         'numbers', nargs='+', help='Numbers to process (e.g. 3 4 5)',
     )
 
-    args = parser.parse_args()
+
 
     # convert the positional arguments (which may be strings) into floats
-    numbers = convert_numbers(args.numbers)
+    
 
-    # keep weights hardcoded as requested (None means equal weights)
-    weights_string = ["1","1","1"]  # Example weights; modify as needed
-    weights = convert_numbers([weights_string])
+
+    
+    parser.add_argument(
+        '--weights', nargs='*', type=str, metavar='WEIGHTS',
+        help='Weights for the numbers (e.g. 1 0.5 2)',
+    )    
+    
+    
+    args=parser.parse_args()
+    weights = convert_numbers(args.weights) if args.weights else None
+    numbers = convert_numbers(args.numbers)
 
     result = average_of_squares(numbers, weights)
     print(result)
